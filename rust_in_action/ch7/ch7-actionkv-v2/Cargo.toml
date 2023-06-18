@@ -1,0 +1,26 @@
+[package]
+name = "libactionkv"
+version = "1.0.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+bincode = "1"
+byteorder = "1.2"
+crc = "1.7.0"
+serde = {version = "1.0", features = ["derive"]}
+
+[lib]
+name = "libactionkv"
+path = "src/lib.rs"
+
+[[bin]]
+name = "akv_mem"
+path = "src/akv_mem.rs"
+
+[[bin]]
+name = "akv_disk"
+path = "src/akv_disk.rs"
+
