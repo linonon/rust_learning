@@ -1,0 +1,5 @@
+{
+	"rust-analyzer.linkedProjects": [
+		"./playground/fibonacci/Cargo.toml"
+	]
+}

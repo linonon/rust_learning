@@ -1,4 +1,4 @@
-mod marco1;
+pub mod marco1;
 
 macro_rules! recurrence {
     ( a[n]: $sty:ty = $($inits:expr),+ , ... , $recur:expr ) => {
