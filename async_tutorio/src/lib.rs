@@ -1,4 +1,3 @@
-pub mod httpweb;
 pub mod pinning;
 pub mod select;
 
