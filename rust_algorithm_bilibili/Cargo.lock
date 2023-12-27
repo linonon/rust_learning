@@ -5,3 +5,7 @@ version = 3
 [[package]]
 name = "luffy-eats-peach"
 version = "0.1.0"
+
+[[package]]
+name = "t2-diving-board"
+version = "0.1.0"

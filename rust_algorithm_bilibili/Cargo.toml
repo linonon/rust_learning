@@ -1,0 +1,5 @@
+[workspace]
+members = [
+	"ch01-recursive/t1-luffy-eats-peach",
+	"ch01-recursive/t2-diving-board",
+]
