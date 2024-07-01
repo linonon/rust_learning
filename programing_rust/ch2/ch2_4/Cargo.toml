@@ -1,6 +1,7 @@
 [package]
-name = "ch2_2-2_3"
+name = "ch2_4"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+ch2_2to2_3 = { path = "../ch2_2to2_3"}

@@ -1,0 +1,9 @@
+[package]
+name = "ch2_5"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+actix-web = "4.8.0"
+serde = {version = "1.0", features = ["derive"]}
+ch2_2to2_3 = { path = "../ch2_2to2_3"}
