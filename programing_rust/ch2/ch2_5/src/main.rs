@@ -51,10 +51,10 @@ async fn post_gcd(form: web::Form<GcdParameters>) -> impl Responder {
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     let server = HttpServer::new(|| {
-        App::new().
-    // service(get_index),
-    route("/", web::get().to(get_index)).
-    route("/gcd", web::post().to(post_gcd))
+        App::new()
+            // service(get_index),
+            .route("/", web::get().to(get_index))
+            .route("/gcd", web::post().to(post_gcd))
     });
     server.bind("127.0.0.1:9900")?.run().await
 }
