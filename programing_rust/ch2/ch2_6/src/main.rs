@@ -116,6 +116,32 @@ fn render(
     }
 }
 
+fn render_v2(
+    pixels: &mut [u8],
+    bounds: (usize, usize),
+    upper_left: Complex<f64>,
+    lower_right: Complex<f64>,
+) {
+    let threads = num_cpus::get();
+    let rows_per_band = bounds.1 / threads + 1;
+
+    let bands: Vec<_> = pixels.chunks_mut(rows_per_band * bounds.0).collect();
+    // scope 保證裡面所有的 threads 執行完以後才會返回 Ok(())
+    crossbeam::scope(|s| {
+        for (i, band) in bands.into_iter().enumerate() {
+            let top = rows_per_band * i;
+            let height = band.len() / bounds.0;
+            let band_bounds = (bounds.0, height);
+            let band_upper_left = pixel_to_point(bounds, (0, top), upper_left, lower_right);
+            let band_lower_right =
+                pixel_to_point(bounds, (bounds.0, top + height), upper_left, lower_right);
+
+            s.spawn(move |_| render(band, band_bounds, band_upper_left, band_lower_right));
+        }
+    })
+    .unwrap();
+}
+
 fn write_image(filename: &str, pixels: &[u8], bounds: (usize, usize)) -> Result<()> {
     let output = File::create(filename).context("failed to create file")?;
     let encoder = PngEncoder::new(output);
@@ -136,6 +162,7 @@ fn test_parse_pair() {
     assert_eq!(Some((1.0, 2.1)), parse_pair("1,2.1", ','));
 }
 
+/// time cargo run -p ch2_6_mandelbrot --release -- mandel.png 8000x6000 -1.20,0.35 -1,0.20
 fn main() {
     let args: Vec<String> = env::args().collect();
 
@@ -153,6 +180,6 @@ fn main() {
     let lower_right = parse_complex(&args[4]).expect("error parsing lower right corner point");
 
     let mut pixels = vec![0; bounds.0 * bounds.1];
-    render(&mut pixels, bounds, upper_left, lower_right);
+    render_v2(&mut pixels, bounds, upper_left, lower_right);
     write_image(&args[1], &pixels, bounds).expect("error writing PNG file");
 }
