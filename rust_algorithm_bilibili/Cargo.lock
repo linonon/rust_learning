@@ -3,9 +3,77 @@
 version = 3
 
 [[package]]
+name = "ds_lib"
+version = "0.1.0"
+source = "git+https://github.com/linonon/ds_lib.git#7c286c4d74fbc1efa7dfc9a16656f44c23e23fa6"
+
+[[package]]
 name = "luffy-eats-peach"
 version = "0.1.0"
 
 [[package]]
+name = "s1-leetcode-20"
+version = "0.1.0"
+dependencies = [
+ "ds_lib",
+]
+
+[[package]]
+name = "s1-order-list"
+version = "0.1.0"
+
+[[package]]
+name = "s2-one-direction-cycle-list"
+version = "0.1.0"
+
+[[package]]
+name = "s3-biodirection-list"
+version = "0.1.0"
+
+[[package]]
+name = "s4-happy-number"
+version = "0.1.0"
+
+[[package]]
+name = "s5-rotate-right"
+version = "0.1.0"
+dependencies = [
+ "ds_lib",
+]
+
+[[package]]
+name = "s6-del-node"
+version = "0.1.0"
+dependencies = [
+ "ds_lib",
+]
+
+[[package]]
+name = "s7-detect-cycle"
+version = "0.1.0"
+dependencies = [
+ "ds_lib",
+]
+
+[[package]]
+name = "s8-reverse-v2"
+version = "0.1.0"
+dependencies = [
+ "ds_lib",
+]
+
+[[package]]
 name = "t2-diving-board"
+version = "0.1.0"
+
+[[package]]
+name = "t3-recursive-implementation-of-exponential-enumeration"
+version = "0.1.0"
+
+[[package]]
+name = "t4-combination-enumeration"
+version = "0.1.0"
+
+[[package]]
+name = "t5-permutation-enumeration"
 version = "0.1.0"
