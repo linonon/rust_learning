@@ -1,0 +1,77 @@
+use anyhow::Result;
+use regex::Regex;
+use std::env;
+use std::fs;
+
+use text_colorizer::Colorize;
+
+#[derive(Debug)]
+struct Arguments {
+    target: String,
+    replacement: String,
+    filename: String,
+    output: String,
+}
+
+#[allow(dead_code)]
+fn print_usage() {
+    eprintln!(
+        "{} - change occurrences of one string into another",
+        "quick_replace".green(),
+    );
+    eprintln!("Usage: quick_replace <target> < replacement> <INPUT> <OUTPUT>");
+}
+
+fn parse_args() -> Arguments {
+    let args: Vec<String> = env::args().skip(1).collect();
+
+    if args.len() != 4 {
+        eprintln!(
+            "{} wrong number of arguments: expect 4, got {}.",
+            "Error:".red().bold(),
+            args.len(),
+        )
+    }
+
+    Arguments {
+        target: args[0].clone(),
+        replacement: args[1].clone(),
+        filename: args[2].clone(),
+        output: args[3].clone(),
+    }
+}
+
+fn print_error(msg: String) {
+    eprintln!("{}{msg}", "Error:".red().bold())
+}
+
+fn replace(target: &str, replacement: &str, text: &str) -> Result<String, anyhow::Error> {
+    let regex = Regex::new(target)?;
+    Ok(regex.replace_all(text, replacement).to_string())
+}
+
+fn main() {
+    let args = parse_args();
+
+    let data = match fs::read_to_string(&args.filename) {
+        Ok(data) => data,
+        Err(e) => {
+            print_error(format!(
+                "failed to read from file:'{}': {:?}",
+                &args.filename, e
+            ));
+            std::process::exit(1);
+        }
+    };
+
+    match fs::write(&args.output, &data) {
+        Ok(_) => {}
+        Err(e) => {
+            print_error(format!(
+                "failed to write to file: '{}': {:?}",
+                &args.output, e
+            ));
+            std::process::exit(1);
+        }
+    };
+}
