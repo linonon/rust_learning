@@ -64,7 +64,15 @@ fn main() {
         }
     };
 
-    match fs::write(&args.output, &data) {
+    let replaced_data = match replace(&args.target, &args.replacement, &data) {
+        Ok(v) => v,
+        Err(e) => {
+            print_error(format!("failed to replaced text: {:?}", e));
+            std::process::exit(1);
+        }
+    };
+
+    match fs::write(&args.output, &replaced_data) {
         Ok(_) => {}
         Err(e) => {
             print_error(format!(
